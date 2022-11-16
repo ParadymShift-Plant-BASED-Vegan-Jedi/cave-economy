@@ -1,0 +1,43 @@
+$if[message[1]==balance||message[1]==bal]
+    $if[$getUserVar[curbal]==undefined]
+        $setUserVar[curbal;0]
+        $sendMessage[Welcome to the cave economy! Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+    $endIf
+    $else
+    $sendMessage[Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+$endIf
+$if[message[1]==work]
+    $if[$getUserVar[curbal]==undefined]
+        $let[workval;$random[150;1500]]
+        $setUserVar[curbal;$get[workval]]
+        $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal :)]
+    $endIf
+    $else
+    $let[workval;$random[150;1500]]
+    $setUserVar[curbal;$sum[$get[workval];$getUserVar[curbal]]
+    $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal]
+$endIf
+$if[$message[1]==shop]
+    $let[g;:gem: rare gem]
+    $let[c;:cyclone: glowing alien object]
+    $let[m;:mushroom: rare fungi]
+    $let[s;:seedling: vegan seedling]
+    $let[f;:flower_playing_cards: rare shiny holographic card]
+    $let[sm;:slot_machine: gambler's badge]
+    $let[b;:bricks: raw materials]
+    $let[cb;:crystal_ball: glowing orb]
+    $let[d;:diamond_shape_with_a_dot_inside: chunk of alien technology]
+    $title[$serverName Shop]
+    $description[Select the item you would like to buy from the drop down menu!]
+    $color[RANDOM]
+    $addField[Items;$get[g] - :coin: `80,000`
+$get[c] - :coin: `50,000`
+$get[m] - :coin: `40,000`
+$get[s] - :coin: `100,000`
+$get[f] - :coin: `50,000`
+$get[sm] - :coin: `200,000`
+$get[b] - :coin: `20,000`
+$get[cb] - :coin: `85,000`
+$get[d] - :coin: `450,000`]
+    $selectMenu[{id=shopmenu}{placeholder=Select Item to buy}{value=1}{label=$get[g]}{desc=Buy $get[g] for :coin: 80,000}{value=1}{label=$get[c]}{desc=Buy $get[c] for :coin: 50,000}{value=1}{label=$get[m]}{desc=Buy $get[m] for :coin: 40,000}{value=1}{label=$get[s]}{desc=Buy $get[s] for :coin: 100,000}{value=1}{label=$get[f]}{desc=Buy $get[f] for :coin: 50,000}{value=1}{label=$get[sm]}{desc=Buy $get[sm] for :coin: 200,000}{value=1}{label=$get[b]}{desc=Buy $get[b] for :coin: 20,000}{value=1}{label=$get[cb]}{desc=Buy $get[cb] for :coin: 85,000}{value=1}{label=$get[d]}{desc=Buy $get[d] for :coin: 450,000}]
+$endIf
