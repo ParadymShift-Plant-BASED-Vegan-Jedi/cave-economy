@@ -7,15 +7,16 @@ $if[message[1]==balance||message[1]==bal]
     $sendMessage[Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
 $endIf
 $if[message[1]==work]
+    $cooldown[6h;You're tired from work and need %time% before working again.]
     $if[$getUserVar[curbal]==undefined]
         $let[workval;$random[150;1500]]
         $setUserVar[curbal;$get[workval]]
         $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal :)]
+        $else
+        $let[workval;$random[150;1500]]
+        $setUserVar[curbal;$sum[$get[workval];$getUserVar[curbal]]
+        $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal]
     $endIf
-    $else
-    $let[workval;$random[150;1500]]
-    $setUserVar[curbal;$sum[$get[workval];$getUserVar[curbal]]
-    $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal]
 $endIf
 $if[$message[1]==shop]
     $let[g;:gem: rare gem]
@@ -41,3 +42,14 @@ $get[cb] - :coin: `85,000`
 $get[d] - :coin: `450,000`]
     $selectMenu[{id=shopmenu}{placeholder=Select Item to buy}{value=1}{label=$get[g]}{desc=Buy $get[g] for :coin: 80,000}{value=1}{label=$get[c]}{desc=Buy $get[c] for :coin: 50,000}{value=1}{label=$get[m]}{desc=Buy $get[m] for :coin: 40,000}{value=1}{label=$get[s]}{desc=Buy $get[s] for :coin: 100,000}{value=1}{label=$get[f]}{desc=Buy $get[f] for :coin: 50,000}{value=1}{label=$get[sm]}{desc=Buy $get[sm] for :coin: 200,000}{value=1}{label=$get[b]}{desc=Buy $get[b] for :coin: 20,000}{value=1}{label=$get[cb]}{desc=Buy $get[cb] for :coin: 85,000}{value=1}{label=$get[d]}{desc=Buy $get[d] for :coin: 450,000}]
 $endIf
+$if[$message[1]==inventory||$message[1]==inv||$message[1]==bag]
+    $if[$getUserVar[inv]==undefined]
+        $sendMessage[Your inventory seems to be empty! Buy some items to add them to your inventory :)]
+        $else
+        $forEach[item;$getUserVar[inv];,]
+        $sendMessage[**Inventory:**
+$get[item]]
+    $endIf
+$endIf
+        
+    
