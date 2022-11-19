@@ -1,4 +1,53 @@
-$if[message[1]==balance||message[1]==bal]
+$if[$message[1]==item]
+    $if[$message[2]==add]
+        $if[$checkCondition[$regexMatch[$message[3];^<a?:\w+:\d{18,19}$>]!=undefined||$isEmoji[$message[3]==true]!=true]
+            $sendMessage[Please provide an item emoji like this: !ce item add :emoji: ITEMNAME ITEMPRICE(number of coins)]
+            $else
+            $if[$message[4]==]
+                $sendMessage[Please provide an item name like this: !ce item add :emoji: ITEMNAME ITEMPRICE(number of coins)]
+                $else
+                $if[$isNumber[$message[5]]!=true]
+                    $sendMessage[Please provide an item price like this: !ce item add :emoji: ITEMNAME ITEMPRICE(number of coins)]
+                    $else
+                    $if[$getServerVar[items]==undefined]
+                        $setServerVar[items;$message[3] $message[4]], ]
+                        $setServerVar[prices;$message[5], ]
+                        $sendMessage[Successfully $message[2]ed first item, $message[3] $message[4] for the price of :coin: $message[5]! View the items shop with !ce shop :)]
+                        $else
+                        $setServerVar[items;$getServerVar[items]$message[3] $message[4], ]
+                        $setServerVar[prices;$getServerVar[prices]$message[5], ]
+                        $sendMessage[Succesesfully $message[2]ed item, $message[3] $message[4] for the price of :coin: $message[5]! View the items shop with !ce shop :)]
+                    $endIf
+                $endIf
+            $endIf
+        $endIf
+    $endIf
+    $if[$message[2]==remove]
+        $if[$getServerVar[items]==undefined]
+            $stop[There are no items to remove.]
+            $else
+            $if[$checkCondition[$regexMatch[$message[3];^<a?:\w+:\d{18,19}$>]!=undefined||$isEmoji[$message[3]==true]!=true]
+                $sendMessage[Please provide an item emoji like this: !ce item remove :emoji: ITEMNAME]
+                $else
+                $if[$message[4]==]
+                    $sendMessage[Please provide an item name like this: !ce item remove :emoji: ITEMNAME]
+                    $else
+                    $textSplit[$getServerVar[items];, ]
+                    $let[index;$findTextSplitIndex[$message[3] $message[4]]]
+                    $removeSplitTextElement[$index]
+                    $setServerVar[items;$joinSplitText[, ]]
+                    $textSplit[$getServerVar[prices];, ]
+                    $removeSplitTextElement[$index]
+                    $setServerVar[prices;$joinSplitText[, ]]
+                $endIf
+            $endIf
+        $endIf
+    $endIf
+    $if[$message[2]!=remove&&$message[2]!=add]
+        $stop[Only !ce item remove `or` !ce item add are valid entries!]
+    $endIf
+$endIf
+$if[$message[1]==balance||$message[1]==bal]
     $if[$getUserVar[curbal]==undefined]
         $setUserVar[curbal;0]
         $sendMessage[Welcome to the cave economy! Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
@@ -6,7 +55,7 @@ $if[message[1]==balance||message[1]==bal]
     $else
     $sendMessage[Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
 $endIf
-$if[message[1]==work]
+$if[$message[1]==work]
     $cooldown[6h;You're tired from work and need %time% before working again.]
     $if[$getUserVar[curbal]==undefined]
         $let[workval;$random[150;1500]]
@@ -44,11 +93,17 @@ $get[d] - :coin: `450,000`]
 $endIf
 $if[$message[1]==inventory||$message[1]==inv||$message[1]==bag]
     $if[$getUserVar[inv]==undefined]
-        $sendMessage[Your inventory seems to be empty! Buy some items to add them to your inventory :)]
+        $sendMessage[Your inventory seems to be empty! Buy some items to add them to your inventory from the !ce shop :)]
         $else
-        $forEach[item;$getUserVar[inv];,]
-        $sendMessage[**Inventory:**
-$get[item]]
+        /* $author[$username's Inventory;$authorAvatar]
+    $color[ORANGE]
+    $description[**Inventory:**
+__:coin: $getUserVar[curbal]__]
+        $forEach[item;$getUserVar[inv];, ]
+        $get[item]] */
+        $sendMessage[**$username's Inventory:**
+        `$getUserVar[curbal]` :coin: cave coins]
+        $get[item]
     $endIf
 $endIf
         
