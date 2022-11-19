@@ -47,7 +47,7 @@ $if[$message[1]==item]
         $stop[Only !ce item remove `or` !ce item add are valid entries!]
     $endIf
 $endIf
-$if[$message[1]==balance||$message[1]==bal]
+$if[$message[1]==balance||$message[1]==bal||$message[1]==pouch]
     $if[$getUserVar[curbal]==undefined]
         $setUserVar[curbal;0]
         $sendMessage[Welcome to the cave economy! Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
