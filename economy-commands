@@ -50,10 +50,10 @@ $endIf
 $if[$message[1]==balance||$message[1]==bal||$message[1]==pouch]
     $if[$getUserVar[curbal]==undefined]
         $setUserVar[curbal;0]
-        $sendMessage[Welcome to the cave economy! Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+        $sendMessage[Welcome to the cave economy! You open your pouch and find :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
     $endIf
     $else
-    $sendMessage[Your current balance is :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+    $sendMessage[You open your pouch and find :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
 $endIf
 $if[$message[1]==work]
     $cooldown[6h;You're tired from work and need %time% before working again.]
