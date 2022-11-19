@@ -1,0 +1,16 @@
+$let[index;$eventSelected[1]]
+$textSplit[$getServerVar[prices];, ]
+$let[price;$splitText[$get[index]]]
+$if[$getUserVar[curbal]==undefined||$sum[$getUserVar[curbal];-$get[price]]<0]
+    $color[RED]
+    $description[You don't have sufficient cave coins in your pouch to buy this item! Check your balance with !ce pouch]
+    $else
+    $textSplit[$items;,]
+    $let[item;$splitText[$get[index]]]
+    $color[GREEN]
+    $let[newbal;$sum[$getUserVar[curbal];-$get[price]]]
+    $setUserVar[bank;$newbal]
+    $setUserVar[inv;$getUserVar[inv]$get[item], ]
+    $description[Sucessfully bought $get[item] with :coin: `$get[price]`]
+    $footer[Requested by $username#$discriminator;$authorAvatar]
+$endIf
