@@ -175,7 +175,7 @@ $if[$message[1]==gam||$message[1]==gamble]
                 $setUserVar[curbal;$sum[$getUserVar[curbal];$getServerVar[jpot]]]
             $endelseif
             $elseIf[$get[slotval]>3984375&&$get[slotval]<10000001]
-                $sendMessage[Unfortunately you rolled a mix of $randomText[:seven:;:lemon:;:blueberries:;:`BAR`:] $randomText[`BAR`;:banana:;:bell:;:lemon:] $randomText[:grapes:;:cherries:;:seven:] and didn't win any cave coins. Better luck next time! <3]
+                $sendMessage[Unfortunately you rolled a mix of $randomText[:seven:;:lemon:;:blueberries:;:`BAR`:] $randomText[`BAR`;:banana:;:bell:;:lemon:] $randomText[:grapes:;:cherries:;:seven:] and didn't win any cave coins. Better luck next time! #LEFT_CLICK#3]
                 $setUserVar[curbal;$sum[$getUserVar[curbal];-$message[2]]]
                 $if[$getServerVar[jpot]==undefined]
                     $setServerVar[jpot;$message[2]]
