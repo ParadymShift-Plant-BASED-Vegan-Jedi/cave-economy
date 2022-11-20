@@ -117,13 +117,66 @@ $if[$message[1]==gam||$message[1]==gamble]
             $stop[You don't have enough coins to wager that much! Check your balance with !ce pouch :)]
         $endelseif
         $else
-        $let[slotval;$random[1;100000]
-        $if[$get[slotval]<20001]
+        $let[slotval;$random[1;10000000]
+        $if[$get[slotval]<2000001]
             $let[wintotal;$multi[$message[2];1.5]]
             $let[winval;$sum[$get[wintotal];-$message[2]]]
-            $sendMessage[Congratulations! You rolled a triple cherry :cherries: :cherries: :cherries: for a 1.5x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
-            $setUserVar[curbal;$sum[$getUserVar[curbal];$get[wintotal]]]
-            $elseIf[$get[slotval]>20000&&$get[slotval]<30001]
+            $sendMessage[Congratulations! You rolled triple cherry :cherries: :cherries: :cherries: for a 1.5x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+            $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $elseIf[$get[slotval]>2000000&&$get[slotval]<3000001]
                 $let[wintotal;$multi[$message[2];2]]
                 $let[winval;$sum[$get[wintotal];-$message[2]]]
-                $sendMessage[Congratulations!
+                $sendMessage[Congratulations! You rolled triple blueberry :blueberries: :blueberries: :blueberries: for a 2x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3000000&&$get[slotval]<3500001]
+                $let[wintotal;$multi[$message[2];4]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations! You rolled triple banana :banana: :banana: :banana: for a 4x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3500000&&$get[slotval]<3750001]
+                $let[wintotal;$multi[$message[2];8]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations! You rolled triple grape :grapes: :grapes: :grapes: for an 8x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3750000&&$get[slotval]<3875001]
+                $let[wintotal;$multi[$message[2];16]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations! You rolled triple lemon :lemon: :lemon: :lemon: for a 16x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3875000&&$get[slotval]<3937501]
+                $let[wintotal;$multi[$message[2];32]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations!! You rolled triple bell :bell: :bell: :bell: for a 32x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more! ^^]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3937500&&$get[slotval]<3968751]
+                $let[wintotal;$multi[$message[2];100]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations!!! :D You rolled triple BAR `BAR` `BAR` `BAR` for a whopping 100x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more juicy coins! ^-^]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$get[winval]]]
+            $endelseif
+            $elseIf[$get[slotval]>3968750&&$get[slotval]<3984376]
+                $let[wintotal;$multi[$message[2];2]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[CONGRATULATIONS!!!!!!!!! YOU ROLLED __**TRIPLE 7**__ :slot_machine: :slot_machine: :slot_machine: AND **WON** THE **ENTIRE** JACKPOT OF :coin: $getServerVar[jpot] CAVE COINS!!! :DDD. Enjoy your winnings and may your luck continue next time!! \( ^ - ^ )/]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];$getServerVar[jpot]]]
+            $endelseif
+            $elseIf[$get[slotval]>3984375&&$get[slotval]<10000001]
+                $sendMessage[Unfortunately you rolled a mix of $randomText[:seven:;:lemon:;:blueberries:;:`BAR`:] $randomText[`BAR`;:banana:;:bell:;:lemon:] $randomText[:grapes:;:cherries:;:seven:] and didn't win any cave coins. Better luck next time! <3]
+                $setUserVar[curbal;$sum[$getUserVar[curbal];-$message[2]]]
+                $if[$getServerVar[jpot]==undefined]
+                    $setServerVar[jpot;$message[2]]
+                    $else
+                    $setServerVar[jpot;$sum[$getUserVar[jpot];$message[2]]]
+                $endIf
+            $endelseif
+            $else
+            $stop[Error. Invalid slot value. Please review code.]
+        $endIf
+    $endIf
+$endIf
+
