@@ -110,7 +110,7 @@ __:coin: $getUserVar[curbal]__]
         $get[item]
     $endIf
 $endIf
-$if[$message[1]==gam||$message[1]==gamble]
+$if[$message[1]==gamt||$message[1]==gamblet]
     $if[$isNumber[$message[2]]!=true]
         $stop[Please include number of coins to wager like this: !ce gamble 5 :)]
         $elseIf[$message[2]>$getUserVar[curbal]]
