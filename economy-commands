@@ -50,9 +50,13 @@ $endIf
 $if[$message[1]==balance||$message[1]==bal||$message[1]==pouch]
     $if[$getUserVar[curbal]==undefined]
         $setUserVar[curbal;0]
-        $sendMessage[Welcome to the cave economy! You open your pouch and find :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+        $sendMessage[Welcome to the cave economy! You open your pouch and find :coin: $getUserVar[curbal] cave coins.
+        
+Get more cave coins with !ce work :)]
         $else
-        $sendMessage[You open your pouch and find :coin: $getUserVar[curbal]. Get more cave coins with !ce work :)]
+        $sendMessage[You open your pouch and find :coin: $getUserVar[curbal] cave coins! 
+        
+Get more cave coins with !ce work :)]
     $endIf
 $endIf
 $if[$message[1]==work]
@@ -63,7 +67,7 @@ $if[$message[1]==work]
         $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal :)]
         $else
         $let[workval;$random[150;1500]]
-        $setUserVar[curbal;$sum[$get[workval];$getUserVar[curbal]]
+        $setUserVar[curbal;$sum[$get[workval];$getUserVar[curbal]]]
         $sendMessage[You $randomText[found some quartz;found a new tunnel;found a new swimming hole;found a new waterfall;found a new cave fungus] and got :coin: $get[workval] cave coins! Check your current balance with !ce bal]
     $endIf
 $endIf
@@ -89,7 +93,7 @@ $get[sm] - :coin: `200,000`
 $get[b] - :coin: `20,000`
 $get[cb] - :coin: `85,000`
 $get[d] - :coin: `450,000`]
-    $selectMenu[{id=shopmenu}{placeholder=Select Item to buy}{value=1}{label=$get[g]}{desc=Buy $get[g] for :coin: 80,000}{value=1}{label=$get[c]}{desc=Buy $get[c] for :coin: 50,000}{value=1}{label=$get[m]}{desc=Buy $get[m] for :coin: 40,000}{value=1}{label=$get[s]}{desc=Buy $get[s] for :coin: 100,000}{value=1}{label=$get[f]}{desc=Buy $get[f] for :coin: 50,000}{value=1}{label=$get[sm]}{desc=Buy $get[sm] for :coin: 200,000}{value=1}{label=$get[b]}{desc=Buy $get[b] for :coin: 20,000}{value=1}{label=$get[cb]}{desc=Buy $get[cb] for :coin: 85,000}{value=1}{label=$get[d]}{desc=Buy $get[d] for :coin: 450,000}]
+    $selectMenu[{id=shopmenu}{placeholder=Select Item to buy}{label=$get[g]}{desc=Buy $get[g] for :coin: 80,000}{value=1}{label=$get[c]}{desc=Buy $get[c] for :coin: 50,000}{value=2}{label=$get[m]}{desc=Buy $get[m] for :coin: 40,000}{value=3}{label=$get[s]}{desc=Buy $get[s] for :coin: 100,000}{value=4}{label=$get[f]}{desc=Buy $get[f] for :coin: 50,000}{value=5}{label=$get[sm]}{desc=Buy $get[sm] for :coin: 200,000}{value=6}{label=$get[b]}{desc=Buy $get[b] for :coin: 20,000}{value=7}{label=$get[cb]}{desc=Buy $get[cb] for :coin: 85,000}{value=8}{label=$get[d]}{desc=Buy $get[d] for :coin: 450,000}]
 $endIf
 $if[$message[1]==inventory||$message[1]==inv||$message[1]==bag]
     $if[$getUserVar[inv]==undefined]
@@ -106,5 +110,20 @@ __:coin: $getUserVar[curbal]__]
         $get[item]
     $endIf
 $endIf
-        
-    
+$if[$message[1]==gam||$message[1]==gamble]
+    $if[$isNumber[$message[2]]!=true]
+        $stop[Please include number of coins to wager like this: !ce gamble 5 :)]
+        $elseIf[$message[2]>$getUserVar[curbal]]
+            $stop[You don't have enough coins to wager that much! Check your balance with !ce pouch :)]
+        $endelseif
+        $else
+        $let[slotval;$random[1;100000]
+        $if[$get[slotval]<20001]
+            $let[wintotal;$multi[$message[2];1.5]]
+            $let[winval;$sum[$get[wintotal];-$message[2]]]
+            $sendMessage[Congratulations! You rolled a triple cherry :cherries: :cherries: :cherries: for a 1.5x multiplier and won :coin: $get[winval] cave coins :). Roll again to win some more!]
+            $setUserVar[curbal;$sum[$getUserVar[curbal];$get[wintotal]]]
+            $elseIf[$get[slotval]>20000&&$get[slotval]<30001]
+                $let[wintotal;$multi[$message[2];2]]
+                $let[winval;$sum[$get[wintotal];-$message[2]]]
+                $sendMessage[Congratulations!
