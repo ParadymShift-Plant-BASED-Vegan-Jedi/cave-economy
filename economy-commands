@@ -117,7 +117,8 @@ $if[$message[1]==gam||$message[1]==gamble]
             $stop[You don't have enough coins to wager that much! Check your balance with !ce pouch :)]
         $endelseif
         $else
-        $let[slotval;$random[1;10000000]
+        $let[slotval;$random[1;10000000]]
+        $sendMessage[$get[slotval] = slotval]
         $if[$get[slotval]<2000001]
             $let[wintotal;$multi[$message[2];1.5]]
             $let[winval;$sum[$get[wintotal];-$message[2]]]
